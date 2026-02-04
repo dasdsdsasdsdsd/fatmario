@@ -7,6 +7,50 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="hud" aria-live="polite">
+      <div class="hud-left">
+        <span id="player">Operator: --</span>
+        <span id="health">Health: 100</span>
+        <span id="ammo">Ammo: 30</span>
+      </div>
+      <span id="targets">Targets: 0 / 8</span>
+    </div>
+
+    <main class="game-wrap">
+      <canvas id="game" aria-label="Skyline Ops game canvas"></canvas>
+      <div class="reticle" aria-hidden="true"></div>
+      <div class="login" id="login">
+        <div class="login-inner">
+          <h1>Skyline Ops</h1>
+          <p>Deploy into the 3D training range.</p>
+          <label class="field">
+            <span>Username</span>
+            <input id="username" placeholder="Enter callsign" maxlength="16" />
+          </label>
+          <label class="field">
+            <span>Loadout</span>
+            <select id="loadout">
+              <option value="Scout">Scout</option>
+              <option value="Sentinel">Sentinel</option>
+              <option value="Vanguard">Vanguard</option>
+            </select>
+          </label>
+          <button id="join">Join Match</button>
+          <div class="controls">
+            <span>Move: WASD</span>
+            <span>Look: Mouse</span>
+            <span>Sprint: Shift</span>
+            <span>Fire: Left click</span>
+            <span>Reload: R</span>
+            <span>Pause: Esc</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="status" id="status">Enter a username to join the match.</div>
+
+    <script type="module" src="script.js"></script>
     <div class="shell">
       <header class="topbar">
         <div>

@@ -1,6 +1,12 @@
 import * as THREE from "https://unpkg.com/three@0.159.0/build/three.module.js";
 
 const canvas = document.getElementById("game");
+const login = document.getElementById("login");
+const joinButton = document.getElementById("join");
+const usernameInput = document.getElementById("username");
+const loadoutSelect = document.getElementById("loadout");
+const statusEl = document.getElementById("status");
+const playerEl = document.getElementById("player");
 const overlay = document.getElementById("overlay");
 const startButton = document.getElementById("start");
 const statusEl = document.getElementById("status");
@@ -22,6 +28,7 @@ let velocity = new THREE.Vector3();
 let direction = new THREE.Vector3();
 
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0f1d);
 scene.background = new THREE.Color(0x0b0e1d);
 
 const camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.1, 1200);
@@ -34,6 +41,7 @@ renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
 const clock = new THREE.Clock();
 
 const floorGeo = new THREE.PlaneGeometry(80, 80);
+const floorMat = new THREE.MeshStandardMaterial({ color: 0x1b2a3f });
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x1d2b3f });
 const floor = new THREE.Mesh(floorGeo, floorMat);
 floor.rotation.x = -Math.PI / 2;
@@ -102,6 +110,9 @@ function lockPointer() {
 
 function onPointerLockChange() {
   isLocked = document.pointerLockElement === canvas;
+  if (!isLocked && isRunning) {
+    statusEl.textContent = "Paused - press join to resume.";
+  }
   overlay.classList.toggle("hidden", isLocked);
   statusEl.textContent = isLocked ? "Training live." : "Paused - click deploy to resume.";
 }
@@ -118,6 +129,7 @@ function onMouseMove(event) {
 
 function shoot() {
   if (!isLocked || ammo <= 0) {
+    statusEl.textContent = ammo <= 0 ? "Reload needed." : "Press join to deploy.";
     statusEl.textContent = ammo <= 0 ? "Reload needed." : "Deploy to fire.";
     return;
   }
@@ -200,12 +212,24 @@ function handleResize() {
   camera.updateProjectionMatrix();
 }
 
+function startGame() {
+  const username = usernameInput.value.trim() || "Operator";
+  const loadout = loadoutSelect.value;
+  playerEl.textContent = `Operator: ${username} (${loadout})`;
+  login.classList.add("hidden");
 startButton.addEventListener("click", () => {
   isRunning = true;
   lockPointer();
   updateHud();
   statusEl.textContent = "Training live.";
   requestAnimationFrame(animate);
+}
+
+joinButton.addEventListener("click", startGame);
+usernameInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    startGame();
+  }
 });
 
 window.addEventListener("resize", handleResize);
