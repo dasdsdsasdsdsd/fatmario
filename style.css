@@ -1,5 +1,11 @@
 :root {
   color-scheme: dark;
+  --bg: #0c0f1b;
+  --panel: #141a2e;
+  --accent: #48d8ff;
+  --accent-2: #ff7b6e;
+  --text: #f5f7ff;
+  --muted: #9aa3c3;
   --bg: #12131a;
   --panel: #1d2030;
   --accent: #ffb347;
@@ -10,11 +16,43 @@
 
 * {
   box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1b2344, var(--bg));
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.shell {
+  width: min(1200px, 100%);
+  background: rgba(9, 12, 24, 0.92);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.topbar {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.topbar h1 {
+  margin: 0 0 6px;
+  font-size: 2.3rem;
+}
+
+.topbar p {
   background: radial-gradient(circle at top, #232642, var(--bg));
   color: var(--text);
   min-height: 100vh;
@@ -54,6 +92,26 @@ header p {
 
 .hud {
   display: flex;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(72, 216, 255, 0.08);
+  font-weight: 600;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 20px;
+  align-items: start;
+}
+
+.game-panel {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 540px;
   gap: 18px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 14px;
@@ -69,6 +127,89 @@ main {
 
 canvas {
   width: 100%;
+  height: 100%;
+  display: block;
+  background: #0b0e1d;
+}
+
+.reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 9, 18, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 2;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-card {
+  background: rgba(15, 20, 36, 0.94);
+  border-radius: 18px;
+  padding: 24px;
+  max-width: 460px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.overlay-card h2 {
+  margin-top: 0;
+}
+
+.overlay-card p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.overlay-card button {
+  margin-top: 18px;
+  background: var(--accent);
+  border: none;
+  color: #06121c;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.controls {
+  margin-top: 16px;
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.sidebar {
+  background: rgba(20, 26, 46, 0.9);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar h2 {
+  margin: 0 0 10px;
+}
+
+.sidebar ul {
+  margin: 0 0 16px;
   border-radius: 16px;
   background: linear-gradient(180deg, #5fc0ff 0%, #bfe9ff 45%, #7dd56f 45%, #4c9f46 100%);
   border: 2px solid rgba(255, 255, 255, 0.12);
@@ -96,6 +237,10 @@ canvas {
 }
 
 .status {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 123, 110, 0.15);
+  border-left: 4px solid var(--accent-2);
   background: rgba(118, 215, 234, 0.2);
   border-left: 4px solid var(--accent-2);
   padding: 12px 14px;
@@ -104,11 +249,14 @@ canvas {
 }
 
 footer {
+  margin-top: 16px;
   margin-top: 20px;
   color: var(--muted);
   font-size: 0.9rem;
 }
 
+@media (max-width: 960px) {
+  .layout {
 @media (max-width: 900px) {
   main {
     grid-template-columns: 1fr;
