@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jumbo Hero - Platformer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="frame">
+      <header>
+        <div>
+          <h1>Jumbo Hero</h1>
+          <p>A classic-style platform adventure inspired by retro arcade games.</p>
+        </div>
+        <div class="hud" aria-live="polite">
+          <span id="score">Score: 0</span>
+          <span id="lives">Lives: 3</span>
+          <span id="level">Level: 1</span>
+        </div>
+      </header>
+      <main>
+        <canvas id="game" width="960" height="540" aria-label="Jumbo Hero game canvas"></canvas>
+        <aside class="tips">
+          <h2>How to Play</h2>
+          <ul>
+            <li>Move: <strong>← →</strong> or <strong>A / D</strong></li>
+            <li>Jump: <strong>Space</strong></li>
+            <li>Pause: <strong>P</strong></li>
+            <li>Collect jumbo gems and avoid the stompers.</li>
+          </ul>
+          <div class="status" id="status">Press Space to start!</div>
+        </aside>
+      </main>
+      <footer>
+        <span>Built for an original retro-style experience.</span>
+      </footer>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
